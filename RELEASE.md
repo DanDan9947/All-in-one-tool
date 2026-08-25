@@ -43,6 +43,7 @@ Windows 安装包和便携版属于构建产物，不直接提交到 Git 仓库�
 
    - [最新版发布页](https://github.com/DanDan9947/All-in-one-tool/releases/latest)
    - [最新版安装程序直链](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/DandanTools-Setup.exe)
+   - [最新版便携版直链](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/DandanTools-windows-x64.zip)
 
 ## 首次发布建议
 
