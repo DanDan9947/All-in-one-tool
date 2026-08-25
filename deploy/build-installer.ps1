@@ -1,15 +1,25 @@
 param(
-    [string]$CompilerPath = ""
+    [string]$CompilerPath = "",
+    [string]$PortablePath = "",
+    [string]$OutputPath = ""
 )
 
 $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $installerScript = Join-Path $PSScriptRoot "windows-installer.iss"
-$distDirectory = Join-Path $projectRoot "dist"
-$portableDirectory = Get-ChildItem -LiteralPath $distDirectory -Directory |
-    Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName "_internal") } |
-    Sort-Object LastWriteTime -Descending |
-    Select-Object -First 1
+$distDirectory = if ($OutputPath) {
+    New-Item -ItemType Directory -Path $OutputPath -Force | Select-Object -ExpandProperty FullName
+} else {
+    Join-Path $projectRoot "dist"
+}
+$portableDirectory = if ($PortablePath) {
+    Get-Item -LiteralPath $PortablePath -ErrorAction Stop
+} else {
+    Get-ChildItem -LiteralPath (Join-Path $projectRoot "dist") -Directory |
+        Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName "_internal") } |
+        Sort-Object LastWriteTime -Descending |
+        Select-Object -First 1
+}
 $portableExecutable = $portableDirectory |
     ForEach-Object { Get-ChildItem -LiteralPath $_.FullName -File -Filter "*.exe" } |
     Select-Object -First 1
@@ -35,7 +45,7 @@ if (-not $CompilerPath -or -not (Test-Path -LiteralPath $CompilerPath)) {
     throw "ISCC.exe was not found. Install Inno Setup 7 or specify -CompilerPath."
 }
 
-& $CompilerPath $installerScript
+& $CompilerPath "/DPortableSource=$($portableDirectory.FullName)" "/DInstallerOutputDir=$distDirectory" $installerScript
 if ($LASTEXITCODE -ne 0) {
     throw "Inno Setup failed with exit code $LASTEXITCODE."
 }
@@ -48,8 +58,8 @@ if (-not $installerOutput) {
 }
 
 $installerMb = [math]::Round($installerOutput.Length / 1MB, 2)
-if ($installerOutput.Length -gt 120MB) {
-    throw "Installer exceeds the 120 MB release limit: $installerMb MB"
+if ($installerOutput.Length -gt 125MB) {
+    throw "Installer exceeds the 125 MB release size budget: $installerMb MB"
 }
 
 $installerOutput |

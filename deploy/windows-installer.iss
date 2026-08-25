@@ -1,6 +1,12 @@
 #define AppName "蛋蛋小工具"
 #define AppVersion "1.0.0"
 #define AppExecutable "蛋蛋小工具.exe"
+#ifndef PortableSource
+#define PortableSource "..\dist\蛋蛋小工具"
+#endif
+#ifndef InstallerOutputDir
+#define InstallerOutputDir "..\dist"
+#endif
 
 [Setup]
 AppId={{06A8EFC0-FA26-4F83-900D-F7D10D58F19A}
@@ -14,7 +20,7 @@ DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
-OutputDir=..\dist
+OutputDir={#InstallerOutputDir}
 OutputBaseFilename=蛋蛋小工具安装程序
 Compression=lzma2/ultra64
 SolidCompression=yes
@@ -36,7 +42,7 @@ Name: "chinesesimplified"; MessagesFile: "assets\ChineseSimplified.isl"
 Name: "desktopicon"; Description: "创建桌面快捷方式"; GroupDescription: "附加快捷方式："; Flags: unchecked
 
 [Files]
-Source: "..\dist\蛋蛋小工具\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PortableSource}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExecutable}"; WorkingDir: "{app}"

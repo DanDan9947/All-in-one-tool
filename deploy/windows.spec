@@ -29,7 +29,14 @@ if not ffmpeg_executable.is_file():
     raise SystemExit("imageio-ffmpeg executable is missing")
 ffmpeg_binaries = [(str(ffmpeg_executable), "imageio_ffmpeg/binaries")]
 for runtime_root in dict.fromkeys((Path(sys.prefix), Path(sys.base_prefix))):
-    for runtime_name in ("libssl-3-x64.dll", "libcrypto-3-x64.dll"):
+    for runtime_name in (
+        "libssl-3-x64.dll",
+        "libcrypto-3-x64.dll",
+        "liblzma.dll",
+        "libbz2.dll",
+        "libexpat.dll",
+        "ffi.dll",
+    ):
         runtime_path = runtime_root / "Library" / "bin" / runtime_name
         if runtime_path.is_file():
             conda_runtime_binaries.append((str(runtime_path), "."))
