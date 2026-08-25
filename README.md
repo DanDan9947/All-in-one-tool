@@ -4,12 +4,12 @@
 
 ## Windows 下载与安装
 
-> [下载最新版 Windows 安装包（蛋蛋小工具安装程序.exe）](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/%E8%9B%8B%E8%9B%8B%E5%B0%8F%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E7%A8%8B%E5%BA%8F.exe)
+> [下载最新版 Windows 安装包（DandanTools-Setup.exe）](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/DandanTools-Setup.exe)
 
 也可以进入 [GitHub Releases](https://github.com/DanDan9947/All-in-one-tool/releases/latest) 查看版本说明、校验值，以及发布时提供的便携版压缩包。
 
 - 系统要求：Windows 10/11 64 位。
-- 安装方式：下载后运行 `蛋蛋小工具安装程序.exe`，按向导完成安装；可选择是否创建桌面快捷方式。
+- 安装方式：下载后运行 `DandanTools-Setup.exe`，按向导完成安装；可选择是否创建桌面快捷方式。
 - 卸载方式：打开 Windows“设置”→“应用”→“已安装的应用”，找到“蛋蛋小工具”并卸载。
 - 隐私说明：文件在本机处理，不上传互联网；临时文件会自动清理。
 

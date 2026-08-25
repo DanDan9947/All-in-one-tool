@@ -116,7 +116,7 @@ Get-ChildItem -LiteralPath $outputDirectory -Recurse -File |
 if ($portableBytes -gt 385MB) {
     throw "Portable application exceeds the 385 MB release limit: $portableMb MB"
 }
-$archiveName = (Split-Path -Leaf $outputDirectory) + "-windows-x64.zip"
+$archiveName = "DandanTools-windows-x64.zip"
 $archivePath = Join-Path (Join-Path $projectRoot "dist") $archiveName
 if (Test-Path -LiteralPath $archivePath) {
     Remove-Item -LiteralPath $archivePath -Force

@@ -19,14 +19,14 @@ Windows 安装包和便携版属于构建产物，不直接提交到 Git 仓库�
 
 4. 确认以下文件能够在一台未安装开发环境的 Windows 10/11 64 位电脑上正常运行：
 
-   - `dist/蛋蛋小工具安装程序.exe`
-   - `dist/蛋蛋小工具-windows-x64.zip`
+   - `dist/DandanTools-Setup.exe`
+   - `dist/DandanTools-windows-x64.zip`
 
 5. 计算并保存 SHA-256：
 
    ```powershell
-   Get-FileHash .\dist\蛋蛋小工具安装程序.exe -Algorithm SHA256
-   Get-FileHash .\dist\蛋蛋小工具-windows-x64.zip -Algorithm SHA256
+   Get-FileHash .\dist\DandanTools-Setup.exe -Algorithm SHA256
+   Get-FileHash .\dist\DandanTools-windows-x64.zip -Algorithm SHA256
    ```
 
 ## 发布到 GitHub Releases
@@ -35,14 +35,14 @@ Windows 安装包和便携版属于构建产物，不直接提交到 Git 仓库�
 2. 创建与安装包版本一致的标签，例如 `v1.0.0`，并填写版本标题和更新内容。
 3. 上传以下两个附件，文件名不要改变，否则 README 中的固定下载链接会失效：
 
-   - `蛋蛋小工具安装程序.exe`
-   - `蛋蛋小工具-windows-x64.zip`
+   - `DandanTools-Setup.exe`
+   - `DandanTools-windows-x64.zip`
 
 4. 在发布说明中写入两个文件的 SHA-256，并注明支持 Windows 10/11 64 位、安装包是否已进行代码签名。
 5. 点击“Publish release”。发布后验证以下链接：
 
    - [最新版发布页](https://github.com/DanDan9947/All-in-one-tool/releases/latest)
-   - [最新版安装程序直链](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/%E8%9B%8B%E8%9B%8B%E5%B0%8F%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E7%A8%8B%E5%BA%8F.exe)
+   - [最新版安装程序直链](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/DandanTools-Setup.exe)
 
 ## 首次发布建议
 
