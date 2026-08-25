@@ -1,0 +1,46 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      MODNET_MODEL_PATH: /app/server/models/modnet_photographic.onnx
+      MODNET_MODEL_SHA256: ${MODNET_MODEL_SHA256:-}
+      MAX_UPLOAD_MB: 10
+      MAX_IMAGE_DIMENSION: 2048
+      CUTOUT_INFERENCE_MAX_DIMENSION: 1024
+      INFERENCE_CONCURRENCY: 2
+      PDF_MAX_PAGES: 30
+      PDF_RESULT_TTL_SECONDS: 30
+      PDF_CONVERSION_CONCURRENCY: 1
+      PDF_CONVERSION_WAIT_SECONDS: 1
+      PDF_CONVERSION_TIMEOUT_SECONDS: 120
+      PDF_TEMP_DIR: /tmp/wechat-pdf-conversions
+    volumes:
+      - ../server/models:/app/server/models:ro
+    tmpfs:
+      - /tmp/wechat-pdf-conversions:size=268435456,mode=1777
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  nginx:
+    build:
+      context: ..
+      dockerfile: deploy/web.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/nginx/certs:ro

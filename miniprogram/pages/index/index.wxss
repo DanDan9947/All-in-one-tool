@@ -1,0 +1,16 @@
+.hero { padding: 48rpx 8rpx 50rpx; }
+.brand-logo { display: block; width: 112rpx; height: 112rpx; margin-bottom: 24rpx; border: 1rpx solid #dce3ef; border-radius: 30rpx; background: #eef2f7; box-shadow: 0 12rpx 32rpx rgba(34,60,100,.14); }
+.eyebrow { display: block; color: #3867f4; font-size: 22rpx; font-weight: 700; letter-spacing: 3rpx; }
+.title { display: block; margin-top: 18rpx; font-size: 60rpx; font-weight: 800; }
+.subtitle { display: block; margin-top: 18rpx; color: #74809a; font-size: 28rpx; line-height: 1.6; }
+.tool-card { display: flex; align-items: center; margin-bottom: 24rpx; padding: 30rpx; background: #fff; border-radius: 28rpx; box-shadow: 0 12rpx 40rpx rgba(34,60,100,.08); }
+.icon { display: flex; width: 88rpx; height: 88rpx; align-items: center; justify-content: center; border-radius: 24rpx; color: #fff; font-size: 36rpx; font-weight: 700; }
+.blue { background: linear-gradient(135deg, #3867f4, #5f8cff); }
+.purple { background: linear-gradient(135deg, #7357e8, #a276ff); }
+.teal { background: linear-gradient(135deg, #009f8b, #30c8ae); }
+.green { background: linear-gradient(135deg, #27845c, #4ab47e); }
+.orange { background: linear-gradient(135deg, #e86f2d, #ff9b4a); font-size: 25rpx; }
+.tool-copy { flex: 1; padding: 0 24rpx; }
+.tool-title { display: block; margin-bottom: 8rpx; font-size: 32rpx; font-weight: 700; }
+.arrow { color: #9aa5ba; font-size: 52rpx; }
+.privacy { display: block; padding: 32rpx 12rpx; text-align: center; color: #8b95aa; font-size: 24rpx; }

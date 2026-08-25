@@ -1,0 +1,9 @@
+.section-title { display: block; margin-bottom: 12rpx; font-size: 34rpx; font-weight: 700; }
+.threshold-panel { margin-top: 24rpx; padding: 22rpx; border-radius: 18rpx; background: #f6faf9; }
+.threshold-heading { display: flex; align-items: center; color: #35405a; font-size: 27rpx; font-weight: 600; }
+.threshold-heading text:first-child { flex: 1; }
+.threshold-value { color: #008a79; }
+.ink-button { background: #009f8b; }
+.result-card { margin-top: 28rpx; }
+.checkerboard { height: 720rpx; margin-top: 24rpx; border-radius: 20rpx; overflow: hidden; background-color: #fff; background-image: linear-gradient(45deg,#e5e8ef 25%,transparent 25%),linear-gradient(-45deg,#e5e8ef 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#e5e8ef 75%),linear-gradient(-45deg,transparent 75%,#e5e8ef 75%); background-size: 36rpx 36rpx; background-position: 0 0,0 18rpx,18rpx -18rpx,-18rpx 0; }
+.result-image { width: 100%; height: 100%; }

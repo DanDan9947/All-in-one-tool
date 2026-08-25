@@ -1,0 +1,49 @@
+<view class="page">
+  <view class="hero">
+    <image class="brand-logo" src="/assets/dandan-logo.png" mode="aspectFit" />
+    <text class="eyebrow">FREE · PRIVATE · SIMPLE</text>
+    <text class="title">蛋蛋小工具</text>
+    <text class="subtitle">免费开源模型处理，不接入按次收费的 AI 服务</text>
+  </view>
+  <view class="tool-card" bindtap="openOcr">
+    <view class="icon blue">文</view>
+    <view class="tool-copy">
+      <text class="tool-title">提取图片文字</text>
+      <text class="hint">识别中文、英文和混排内容</text>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+  <view class="tool-card" bindtap="openImageCompress">
+    <view class="icon green">压</view>
+    <view class="tool-copy">
+      <text class="tool-title">图片压缩</text>
+      <text class="hint">智能减小图片体积，支持目标大小</text>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+  <view class="tool-card" bindtap="openPdfConvert">
+    <view class="icon orange">PDF</view>
+    <view class="tool-copy">
+      <text class="tool-title">PDF 转 Excel / Word</text>
+      <text class="hint">提取表格或生成可编辑文档</text>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+  <view class="tool-card" bindtap="openCutout">
+    <view class="icon purple">像</view>
+    <view class="tool-copy">
+      <text class="tool-title">人像背景移除</text>
+      <text class="hint">生成透明背景 PNG 图片</text>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+  <view class="tool-card" bindtap="openInkCutout">
+    <view class="icon teal">章</view>
+    <view class="tool-copy">
+      <text class="tool-title">文字/印章抠图</text>
+      <text class="hint">保留印章、文字和手写，去除白色背景</text>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+  <text class="privacy">图片仅用于当次处理，服务器不会保存历史记录</text>
+</view>

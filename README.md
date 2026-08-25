@@ -6,7 +6,7 @@
 
 > [下载最新版 Windows 安装包（蛋蛋小工具安装程序.exe）](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/%E8%9B%8B%E8%9B%8B%E5%B0%8F%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E7%A8%8B%E5%BA%8F.exe)
 
-也可以进入 [GitHub Releases](https://github.com/DanDan9947/All-in-one-tool/releases/latest) 查看版本说明、校验值和便携版压缩包。
+也可以进入 [GitHub Releases](https://github.com/DanDan9947/All-in-one-tool/releases/latest) 查看版本说明、校验值，以及发布时提供的便携版压缩包。
 
 - 系统要求：Windows 10/11 64 位。
 - 安装方式：下载后运行 `蛋蛋小工具安装程序.exe`，按向导完成安装；可选择是否创建桌面快捷方式。

@@ -1,0 +1,51 @@
+<view class="page">
+  <view class="card">
+    <text class="section-title">选择一张人像照片</text>
+    <text class="hint">人物越清晰、背景区分越明显，抠图效果越好</text>
+    <image wx:if="{{imagePath}}" class="preview" src="{{imagePath}}" mode="aspectFit" />
+    <button class="secondary-button" bindtap="chooseImage">{{imagePath ? '重新选择' : '拍照或选择图片'}}</button>
+    <button wx:if="{{imagePath}}" class="primary-button" loading="{{loading}}" disabled="{{loading}}" bindtap="cutout">移除背景</button>
+  </view>
+  <view wx:if="{{resultPath}}" class="card result-card">
+    <text class="section-title">选择证件照背景</text>
+    <text class="hint">抠图只处理一次，切换背景色不会重新上传图片</text>
+    <view class="color-options">
+      <view class="color-option {{selectedBackground === 'transparent' ? 'selected' : ''}}" data-key="transparent" data-color="" data-label="透明" bindtap="selectBackground">
+        <view class="color-swatch transparent-swatch"></view>
+        <text>透明</text>
+      </view>
+      <view class="color-option {{selectedBackground === 'white' ? 'selected' : ''}}" data-key="white" data-color="#FFFFFF" data-label="白色" bindtap="selectBackground">
+        <view class="color-swatch white-swatch"></view>
+        <text>白色</text>
+      </view>
+      <view class="color-option {{selectedBackground === 'blue' ? 'selected' : ''}}" data-key="blue" data-color="#438EDB" data-label="蓝色" bindtap="selectBackground">
+        <view class="color-swatch blue-swatch"></view>
+        <text>蓝色</text>
+      </view>
+      <view class="color-option {{selectedBackground === 'red' ? 'selected' : ''}}" data-key="red" data-color="#D93838" data-label="红色" bindtap="selectBackground">
+        <view class="color-swatch red-swatch"></view>
+        <text>红色</text>
+      </view>
+    </view>
+    <view class="color-picker-panel">
+      <view class="picker-heading">
+        <text class="picker-title">自定义颜色</text>
+        <view class="selected-color-preview" style="background-color: {{customColor}};"></view>
+        <text class="selected-color-value">{{customColor}}</text>
+      </view>
+      <view id="colorPalette" class="color-palette" style="background-color: {{pickerHueColor}};" bindtouchstart="onPaletteTouchStart" catchtouchmove="onPaletteTouchMove">
+        <view class="palette-cursor" style="left: {{pickerX}}%; top: {{pickerY}}%;"></view>
+      </view>
+      <view id="huePicker" class="hue-picker" bindtouchstart="onHueTouchStart" catchtouchmove="onHueTouchMove">
+        <view class="hue-cursor" style="left: {{hueX}}%;"></view>
+      </view>
+      <button class="apply-color-button" bindtap="applyCustomColor">应用这个颜色</button>
+    </view>
+    <view class="result-stage {{selectedBackground === 'transparent' ? 'checkerboard' : ''}}" style="background-color: {{selectedBackgroundColor || '#FFFFFF'}};">
+      <image class="result-image" src="{{resultPath}}" mode="aspectFit" />
+      <view wx:if="{{compositing}}" class="compositing-mask"><text>正在生成背景…</text></view>
+    </view>
+    <button class="primary-button" loading="{{compositing}}" disabled="{{compositing}}" bindtap="saveResult">{{saveButtonText}}</button>
+  </view>
+  <canvas canvas-id="photoCanvas" class="composition-canvas" style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"></canvas>
+</view>

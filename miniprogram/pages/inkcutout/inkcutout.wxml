@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="card">
+    <text class="section-title">选择文字、印章或手写图片</text>
+    <text class="hint">蓝色印章、彩色文字和黑色手写都会保留，仅去除白色或近白色背景</text>
+    <image wx:if="{{imagePath}}" class="preview" src="{{imagePath}}" mode="aspectFit" />
+    <button class="secondary-button" bindtap="chooseImage">{{imagePath ? '重新选择' : '拍照或选择图片'}}</button>
+    <view wx:if="{{imagePath}}" class="threshold-panel">
+      <view class="threshold-heading">
+        <text>去白强度</text>
+        <text class="threshold-value">{{threshold}}</text>
+      </view>
+      <slider min="0" max="80" step="1" value="{{threshold}}" activeColor="#009f8b" bindchange="onThresholdChange" />
+      <text class="hint">背景有灰影时调高；浅色文字丢失时调低</text>
+    </view>
+    <button wx:if="{{imagePath}}" class="primary-button ink-button" loading="{{loading}}" disabled="{{loading}}" bindtap="processImage">{{resultPath ? '按当前强度重新处理' : '开始文字抠图'}}</button>
+  </view>
+  <view wx:if="{{resultPath}}" class="card result-card">
+    <text class="section-title">透明背景结果</text>
+    <view class="checkerboard"><image class="result-image" src="{{resultPath}}" mode="aspectFit" /></view>
+    <button class="primary-button ink-button" bindtap="saveResult">保存透明 PNG</button>
+  </view>
+</view>

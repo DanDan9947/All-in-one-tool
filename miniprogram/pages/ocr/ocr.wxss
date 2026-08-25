@@ -1,0 +1,5 @@
+.section-title { display: block; margin-bottom: 12rpx; font-size: 34rpx; font-weight: 700; }
+.result-card { margin-top: 28rpx; }
+.result-head { display: flex; justify-content: space-between; align-items: center; }
+.copy { color: #3867f4; font-size: 28rpx; font-weight: 600; }
+.result-text { display: block; margin-top: 24rpx; padding: 24rpx; border-radius: 16rpx; background: #f7f9fd; font-size: 29rpx; line-height: 1.75; white-space: pre-wrap; user-select: text; -webkit-user-select: text; }

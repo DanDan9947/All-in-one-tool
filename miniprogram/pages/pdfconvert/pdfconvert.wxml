@@ -1,0 +1,56 @@
+<view class="page">
+  <view class="card">
+    <text class="section-title">选择 PDF 文件</text>
+    <text class="hint">支持 10MB、30 页以内且可以选中文字的 PDF。扫描件和加密文件暂不支持。</text>
+
+    <view wx:if="{{filePath}}" class="file-panel">
+      <view class="file-icon">PDF</view>
+      <view class="file-copy">
+        <text class="file-name">{{fileName}}</text>
+        <text class="file-size">{{fileSizeLabel}}</text>
+      </view>
+    </view>
+
+    <button class="secondary-button" disabled="{{loading}}" bindtap="choosePdf">
+      {{filePath ? '重新选择 PDF' : '从微信会话选择 PDF'}}
+    </button>
+
+    <view class="format-section">
+      <text class="format-title">转换格式</text>
+      <view class="format-options">
+        <view class="format-option {{outputFormat === 'xlsx' ? 'selected excel' : ''}}" data-format="xlsx" bindtap="selectFormat">
+          <text class="format-badge">XLSX</text>
+          <text class="format-name">转 Excel</text>
+          <text class="format-hint">提取表格，跨页同表头自动合并</text>
+        </view>
+        <view class="format-option {{outputFormat === 'docx' ? 'selected word' : ''}}" data-format="docx" bindtap="selectFormat">
+          <text class="format-badge">DOCX</text>
+          <text class="format-name">转 Word</text>
+          <text class="format-hint">生成可编辑文字和表格</text>
+        </view>
+      </view>
+    </view>
+
+    <button wx:if="{{filePath}}" class="primary-button" loading="{{loading}}" disabled="{{loading}}" bindtap="convert">
+      {{loading ? '正在处理' : (outputFormat === 'xlsx' ? '转换为 Excel' : '转换为 Word')}}
+    </button>
+
+    <view wx:if="{{loading}}" class="progress-panel">
+      <view class="progress-track">
+        <view class="progress-value" style="width: {{progress}}%;"></view>
+      </view>
+      <text class="progress-text">{{stageText}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{resultPath}}" class="card result-card">
+    <view class="success-mark">✓</view>
+    <text class="section-title result-title">转换完成</text>
+    <text class="result-name">{{resultName}}</text>
+    <text class="hint result-hint">电脑端可直接另存到磁盘；手机端可发送到文件传输助手、好友或群聊。</text>
+    <button class="primary-button" bindtap="exportResult">导出 / 发送文件</button>
+    <button class="secondary-button" bindtap="openResult">预览文件</button>
+  </view>
+
+  <text class="privacy-note">原 PDF 转换完成后立即删除，服务器结果最多临时保留 30 秒。</text>
+</view>

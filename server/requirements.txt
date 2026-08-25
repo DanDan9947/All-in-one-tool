@@ -1,0 +1,16 @@
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+python-multipart==0.0.20
+numpy==2.2.6
+pillow==11.3.0
+opencv-python==5.0.0.93
+onnxruntime==1.22.1
+rapidocr==3.4.1
+pydantic-settings==2.10.1
+pypdf==6.10.0
+pdfplumber==0.11.9
+openpyxl==3.1.5
+xlrd==2.0.2
+opencc-python-reimplemented==0.1.7
+python-docx==1.2.0
+imageio-ffmpeg==0.6.0

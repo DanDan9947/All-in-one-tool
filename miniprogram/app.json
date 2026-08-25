@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/imagecompress/imagecompress",
+    "pages/ocr/ocr",
+    "pages/pdfconvert/pdfconvert",
+    "pages/cutout/cutout",
+    "pages/inkcutout/inkcutout"
+  ],
+  "window": {
+    "navigationBarTitleText": "蛋蛋小工具",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f7fb"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

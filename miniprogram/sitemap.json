@@ -1,0 +1,4 @@
+{
+  "desc": "蛋蛋小工具页面索引",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

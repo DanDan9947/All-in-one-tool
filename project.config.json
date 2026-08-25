@@ -1,0 +1,14 @@
+{
+  "description": "免费开源图片文字识别与人像抠图工具",
+  "miniprogramRoot": "miniprogram/",
+  "compileType": "miniprogram",
+  "appid": "wxde516149f9e44c56",
+  "projectname": "wechat-image-tools",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "compileHotReLoad": false,
+    "useCompilerPlugins": ["typescript"]
+  }
+}

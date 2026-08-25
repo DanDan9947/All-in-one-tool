@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="card">
+    <text class="section-title">选择含有文字的图片</text>
+    <text class="hint">支持 JPG、PNG、WebP，单张不超过 10MB</text>
+    <image wx:if="{{imagePath}}" class="preview" src="{{imagePath}}" mode="aspectFit" />
+    <button class="secondary-button" bindtap="chooseImage">{{imagePath ? '重新选择' : '拍照或选择图片'}}</button>
+    <button wx:if="{{imagePath}}" class="primary-button" loading="{{loading}}" disabled="{{loading}}" bindtap="recognize">开始识别</button>
+  </view>
+  <view wx:if="{{resultText}}" class="card result-card">
+    <view class="result-head"><text class="section-title">识别结果</text><text class="copy" bindtap="copyText">复制全部</text></view>
+    <text class="result-text" selectable="{{true}}" user-select="{{true}}" space="nbsp">{{resultText}}</text>
+  </view>
+</view>

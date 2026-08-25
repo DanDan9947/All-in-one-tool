@@ -1,0 +1,25 @@
+.section-title { display: block; margin-bottom: 12rpx; font-size: 34rpx; font-weight: 700; }
+.result-card { margin-top: 28rpx; }
+.color-options { display: flex; gap: 18rpx; margin-top: 26rpx; }
+.color-option { display: flex; flex: 1; flex-direction: column; align-items: center; gap: 10rpx; padding: 14rpx 6rpx; border: 3rpx solid transparent; border-radius: 18rpx; color: #65708a; font-size: 24rpx; }
+.color-option.selected { border-color: #3867f4; background: #f2f5ff; color: #244fc5; font-weight: 600; }
+.color-swatch { width: 64rpx; height: 64rpx; border: 2rpx solid #d8deea; border-radius: 50%; box-sizing: border-box; }
+.transparent-swatch { background-color: #fff; background-image: linear-gradient(45deg,#dfe4ed 25%,transparent 25%),linear-gradient(-45deg,#dfe4ed 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#dfe4ed 75%),linear-gradient(-45deg,transparent 75%,#dfe4ed 75%); background-size: 20rpx 20rpx; background-position: 0 0,0 10rpx,10rpx -10rpx,-10rpx 0; }
+.white-swatch { background: #fff; }
+.blue-swatch { background: #438edb; }
+.red-swatch { background: #d93838; }
+.color-picker-panel { margin-top: 24rpx; padding: 22rpx; border: 2rpx solid #e4e9f2; border-radius: 20rpx; background: #f9faff; }
+.picker-heading { display: flex; align-items: center; margin-bottom: 18rpx; }
+.picker-title { flex: 1; color: #35405a; font-size: 27rpx; font-weight: 600; }
+.selected-color-preview { width: 42rpx; height: 42rpx; margin-right: 12rpx; border: 2rpx solid rgba(23,32,51,.16); border-radius: 50%; }
+.selected-color-value { color: #58647d; font-family: monospace; font-size: 25rpx; }
+.color-palette { position: relative; height: 300rpx; overflow: hidden; border-radius: 16rpx; background-image: linear-gradient(to bottom, transparent, #000), linear-gradient(to right, #fff, transparent); touch-action: none; }
+.palette-cursor { position: absolute; width: 34rpx; height: 34rpx; border: 5rpx solid #fff; border-radius: 50%; box-shadow: 0 1rpx 8rpx rgba(0,0,0,.65); transform: translate(-50%,-50%); pointer-events: none; }
+.hue-picker { position: relative; height: 36rpx; margin-top: 22rpx; border-radius: 18rpx; background: linear-gradient(to right,#f00 0%,#ff0 16.67%,#0f0 33.33%,#0ff 50%,#00f 66.67%,#f0f 83.33%,#f00 100%); touch-action: none; }
+.hue-cursor { position: absolute; top: 50%; width: 24rpx; height: 52rpx; border: 4rpx solid #fff; border-radius: 12rpx; box-shadow: 0 1rpx 8rpx rgba(0,0,0,.65); transform: translate(-50%,-50%); pointer-events: none; }
+.apply-color-button { margin-top: 22rpx; border: 0; border-radius: 16rpx; background: #eef2ff; color: #3158cf; font-size: 26rpx; font-weight: 600; }
+.result-stage { position: relative; height: 720rpx; margin-top: 24rpx; border-radius: 20rpx; overflow: hidden; }
+.checkerboard { background-color: #fff; background-image: linear-gradient(45deg,#e5e8ef 25%,transparent 25%),linear-gradient(-45deg,#e5e8ef 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#e5e8ef 75%),linear-gradient(-45deg,transparent 75%,#e5e8ef 75%); background-size: 36rpx 36rpx; background-position: 0 0,0 18rpx,18rpx -18rpx,-18rpx 0; }
+.result-image { width: 100%; height: 100%; }
+.compositing-mask { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(23,32,51,.48); color: #fff; font-size: 28rpx; }
+.composition-canvas { position: fixed; left: -10000px; top: -10000px; pointer-events: none; }

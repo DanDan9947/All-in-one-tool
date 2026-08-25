@@ -1,0 +1,2 @@
+"""Wechat image tools API."""
+
