@@ -2,14 +2,27 @@
 
 一个完全在本机运行的 Windows 文件处理工具：支持图片压缩、视频压缩、电脑录屏、RapidOCR 中英文识别、PDF 转 Excel / Word、MODNet 人像抠图和印章抠图。文件不会上传互联网，也不会保留处理历史；除用户主动保存的最终结果外，处理过程中产生的临时文件会自动清理。
 
-Windows 用户可以运行 `dist/蛋蛋小工具安装程序.exe` 完成安装；安装向导支持选择安装位置、创建桌面快捷方式，并可从 Windows“已安装的应用”中卸载。
+## Windows 下载与安装
+
+> [下载最新版 Windows 安装包（蛋蛋小工具安装程序.exe）](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/%E8%9B%8B%E8%9B%8B%E5%B0%8F%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E7%A8%8B%E5%BA%8F.exe)
+
+也可以进入 [GitHub Releases](https://github.com/DanDan9947/All-in-one-tool/releases/latest) 查看版本说明、校验值和便携版压缩包。
+
+- 系统要求：Windows 10/11 64 位。
+- 安装方式：下载后运行 `蛋蛋小工具安装程序.exe`，按向导完成安装；可选择是否创建桌面快捷方式。
+- 卸载方式：打开 Windows“设置”→“应用”→“已安装的应用”，找到“蛋蛋小工具”并卸载。
+- 隐私说明：文件在本机处理，不上传互联网；临时文件会自动清理。
+
+当前安装包尚未进行商业代码签名，Windows SmartScreen 可能显示“Windows 已保护你的电脑”。请只从本项目的 GitHub Releases 下载；确认发布者和版本来源后，可选择“更多信息”→“仍要运行”。
+
+> 维护者注意：`dist/` 是构建产物并已被 Git 忽略，不要把 EXE 直接提交到仓库。发布新版本时，请按 [RELEASE.md](RELEASE.md) 将安装包上传为 GitHub Release 附件；首次 Release 发布前，上面的下载链接暂时不可用。
 
 ## 项目组成
 
 - `miniprogram/`：原生微信小程序 TypeScript 页面。
 - `web/`：Vue 3、Vite、TypeScript 响应式网页。
 - `server/`：FastAPI、RapidOCR、MODNet ONNX，以及 PDF/Office 转换服务。
-- `deploy/`：Docker Compose 与 Nginx HTTPS 部署配置。
+- `deploy/`：Docker Compose、Nginx HTTPS 和 Windows 打包配置。
 
 ## 1. Conda 本地环境
 
