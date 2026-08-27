@@ -29,7 +29,7 @@ describe('C user feature suggestions', () => {
       submitSuggestion({ title: ' 批量转换 ', content: ' 希望增加批量转换 ', contact: ' ' })
     ).resolves.toEqual(suggestion)
     expect(fetchMock).toHaveBeenCalledWith(
-      'http://172.23.31.184:8081/prod-api/c/suggestion/submit',
+      'https://danyy.cn/api/c/suggestion/submit',
       expect.objectContaining({
         headers: expect.objectContaining({ Authorization: 'Bearer c-user-token' }),
         body: JSON.stringify({ title: '批量转换', content: '希望增加批量转换' })

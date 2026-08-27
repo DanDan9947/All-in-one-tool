@@ -127,7 +127,7 @@ async function submit() {
           <span>确认密码 <b class="required">*</b></span>
           <input v-model="form.confirmPassword" name="confirmPassword" type="password" maxlength="32" autocomplete="new-password" placeholder="再次输入密码" />
         </label>
-        <label>
+        <label class="captcha-label">
           <span>图形验证码 <b class="required">*</b></span>
           <span class="captcha-field">
             <input v-model="form.captchaCode" name="captchaCode" maxlength="6" autocomplete="off" placeholder="请输入验证码" />

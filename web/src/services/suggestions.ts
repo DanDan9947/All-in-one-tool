@@ -1,8 +1,5 @@
 import { authState } from './auth'
-
-const C_API_ROOT = (
-  import.meta.env.VITE_C_USER_API_URL || 'http://172.23.31.184:8081/prod-api'
-).replace(/\/$/, '')
+import { fetchAccountApi } from '../config/accountApi'
 
 interface ApiEnvelope<T> {
   success: boolean
@@ -51,7 +48,7 @@ async function post<T>(path: string, body: object): Promise<ApiEnvelope<T>> {
 
   let response: Response
   try {
-    response = await fetch(`${C_API_ROOT}${path}`, {
+    response = await fetchAccountApi(path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

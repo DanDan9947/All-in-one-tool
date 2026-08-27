@@ -33,7 +33,7 @@ describe('C user authentication service', () => {
 
     await expect(login(' alice ', 'secret123', 'captcha-1', 'A7K9')).resolves.toEqual(session)
     expect(fetchMock).toHaveBeenCalledWith(
-      'http://172.23.31.184:8081/prod-api/c/user/login',
+      'https://danyy.cn/api/c/user/login',
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({
@@ -65,7 +65,7 @@ describe('C user authentication service', () => {
       captchaCode: ' B3M8 '
     })
     expect(fetchMock.mock.calls[0][0]).toBe(
-      'http://172.23.31.184:8081/prod-api/c/user/register'
+      'https://danyy.cn/api/c/user/register'
     )
     expect(fetchMock.mock.calls[0][1]?.body).toBe(
       JSON.stringify({
@@ -93,7 +93,7 @@ describe('C user authentication service', () => {
 
     await expect(getCaptcha()).resolves.toEqual(challenge)
     expect(fetchMock.mock.calls[0][0]).toBe(
-      'http://172.23.31.184:8081/prod-api/c/user/captcha'
+      'https://danyy.cn/api/c/user/captcha'
     )
   })
 
@@ -123,7 +123,7 @@ describe('C user authentication service', () => {
 
     await expect(refreshUserSetting()).resolves.toEqual(setting)
     expect(fetchMock.mock.calls[0][0]).toBe(
-      'http://172.23.31.184:8081/prod-api/c/user/setting/detail'
+      'https://danyy.cn/api/c/user/setting/detail'
     )
     expect(authState.setting).toEqual(setting)
     expect(loginIsRequired()).toBe(true)

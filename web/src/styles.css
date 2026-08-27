@@ -403,6 +403,10 @@ a {
   gap: 10px;
 }
 
+.auth-field-grid .captcha-label {
+  grid-column: 1 / -1;
+}
+
 .captcha-image-button {
   height: 46px;
   overflow: hidden;

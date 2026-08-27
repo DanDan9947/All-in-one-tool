@@ -1,8 +1,6 @@
 import { reactive } from 'vue'
 
-const C_API_ROOT = (
-  import.meta.env.VITE_C_USER_API_URL || 'http://172.23.31.184:8081/prod-api'
-).replace(/\/$/, '')
+import { fetchAccountApi } from '../config/accountApi'
 
 interface PageEnvelope<T> {
   success: boolean
@@ -41,7 +39,7 @@ export const publicContentState = reactive<{
 let contentRequest: Promise<void> | null = null
 
 async function fetchPage<T>(path: string, body: object): Promise<T[]> {
-  const response = await fetch(`${C_API_ROOT}${path}`, {
+  const response = await fetchAccountApi(path, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)

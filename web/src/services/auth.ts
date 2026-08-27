@@ -1,5 +1,6 @@
 import { reactive } from 'vue'
 
+import { fetchAccountApi } from '../config/accountApi'
 import type {
   AuthSession,
   CaptchaChallenge,
@@ -8,9 +9,6 @@ import type {
   RegisterPayload
 } from '../types/auth'
 
-const AUTH_API_ROOT = (
-  import.meta.env.VITE_C_USER_API_URL || 'http://172.23.31.184:8081/prod-api'
-).replace(/\/$/, '')
 const AUTH_STORAGE_KEY = 'dandan-c-user-auth'
 
 interface AuthEnvelope<T> {
@@ -62,13 +60,13 @@ const SETTING_CACHE_MS = 15_000
 async function post<T>(path: string, data: object): Promise<T> {
   let response: Response
   try {
-    response = await fetch(`${AUTH_API_ROOT}${path}`, {
+    response = await fetchAccountApi(path, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
   } catch {
-    throw new AuthError('无法连接账号服务，请确认服务器 172.23.31.184:8081 可访问')
+    throw new AuthError('无法连接账号服务，请确认当前配置的服务器可访问')
   }
 
   let body: AuthEnvelope<T> | null = null
