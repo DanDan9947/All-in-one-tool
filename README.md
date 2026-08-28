@@ -2,6 +2,10 @@
 
 一个完全在本机运行的 Windows 文件处理工具：支持图片压缩、视频压缩、电脑录屏、RapidOCR 中英文识别、PDF 转 Excel / Word、MODNet 人像抠图和印章抠图。文件不会上传互联网，也不会保留处理历史；除用户主动保存的最终结果外，处理过程中产生的临时文件会自动清理。
 
+<div>
+  <img style="margin:10px" src="./001.png" alt="drawing"/>
+</div>
+
 ## Windows 下载与安装
 
 > - [下载 Windows 安装版（DandanTools-Setup.exe）](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/DandanTools-Setup.exe)
