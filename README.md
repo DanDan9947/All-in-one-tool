@@ -14,6 +14,8 @@
 
 > - [下载 Windows 安装版（DandanTools-Setup.exe）](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/DandanTools-Setup.exe)
 > - [下载 Windows 便携版（DandanTools-windows-x64.zip）](https://github.com/DanDan9947/All-in-one-tool/releases/latest/download/DandanTools-windows-x64.zip)
+>
+> - 快速下载的夸克地址：https://pan.quark.cn/s/e68323e6ced8   夸克网盘提取码：QDy9
 
 也可以进入 [GitHub Releases](https://github.com/DanDan9947/All-in-one-tool/releases/latest) 查看版本说明、校验值，以及发布时提供的便携版压缩包。
 
