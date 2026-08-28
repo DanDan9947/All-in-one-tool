@@ -1,4 +1,5 @@
 import asyncio
+import os
 from pathlib import Path
 import shutil
 import time
@@ -23,8 +24,13 @@ from .services.screen_recording_transcoder import (
     RecordingTranscodeTimeoutError,
 )
 from .services.video_compression import VideoCompressionOptions
+from .services.windows_build import WindowsBuildManager
 
 router = APIRouter(prefix="/api/v1")
+
+
+class StartWindowsBuildRequest(BaseModel):
+    targetDirectory: str | None = None
 
 
 class CreateScreenRecordingRequest(BaseModel):
@@ -34,6 +40,56 @@ class CreateScreenRecordingRequest(BaseModel):
 class CompleteScreenRecordingRequest(BaseModel):
     fileName: str
     durationSeconds: int = Field(ge=0)
+
+
+@router.post("/windows-builds")
+async def start_windows_build(
+    request: Request, body: StartWindowsBuildRequest | None = None
+):
+    target_directory = body.targetDirectory if body else None
+    result = await request.app.state.windows_build_manager.start(
+        request.headers.get("Authorization"),
+        target_directory=target_directory,
+    )
+    if result.get("requiresAppExit"):
+        async def exit_after_response() -> None:
+            await asyncio.sleep(2)
+            os._exit(0)
+
+        asyncio.create_task(exit_after_response())
+    return {"success": True, "data": result, "requestId": request.state.request_id}
+
+
+@router.get("/windows-builds/current")
+async def current_windows_build(request: Request):
+    return {
+        "success": True,
+        "data": request.app.state.windows_build_manager.status(),
+        "requestId": request.state.request_id,
+    }
+
+
+@router.get("/windows-builds/artifacts/{file_name}")
+async def download_windows_build_artifact(request: Request, file_name: str) -> FileResponse:
+    manager: WindowsBuildManager = request.app.state.windows_build_manager
+    artifact_path = manager.get_artifact_path(file_name)
+    if artifact_path is None or not artifact_path.is_file():
+        raise AppError("ARTIFACT_NOT_FOUND", "构建产物不存在或未生成", 404)
+
+    media_type = (
+        "application/zip"
+        if file_name.endswith(".zip")
+        else "application/vnd.microsoft.portable-executable"
+    )
+    return FileResponse(
+        path=artifact_path,
+        media_type=media_type,
+        filename=artifact_path.name,
+        headers={
+            "X-Request-Id": request.state.request_id,
+            "Cache-Control": "no-store",
+        },
+    )
 
 
 async def read_image_body(request: Request, file: UploadFile | None) -> bytes:

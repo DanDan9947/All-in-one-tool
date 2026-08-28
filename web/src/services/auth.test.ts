@@ -2,11 +2,13 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   authState,
+  featurePermissionState,
   getCaptcha,
   login,
   loginIsRequired,
   logout,
   refreshUserSetting,
+  refreshFeaturePermissions,
   registrationIsEnabled,
   register,
   saveSession
@@ -16,6 +18,7 @@ describe('C user authentication service', () => {
   beforeEach(() => {
     localStorage.clear()
     authState.session = null
+    featurePermissionState.codes = []
     vi.restoreAllMocks()
   })
 
@@ -37,6 +40,7 @@ describe('C user authentication service', () => {
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({
+          userType: 'TOOL',
           username: 'alice',
           password: 'secret123',
           captchaId: 'captcha-1',
@@ -67,14 +71,15 @@ describe('C user authentication service', () => {
     expect(fetchMock.mock.calls[0][0]).toBe(
       'https://danyy.cn/api/c/user/register'
     )
-    expect(fetchMock.mock.calls[0][1]?.body).toBe(
-      JSON.stringify({
+    expect(JSON.parse(String(fetchMock.mock.calls[0][1]?.body))).toEqual(
+      {
+        userType: 'TOOL',
         username: 'bob',
         password: 'secret123',
         nickname: 'Bob',
         captchaId: 'captcha-2',
         captchaCode: 'B3M8'
-      })
+      }
     )
     await expect(login('bob', 'wrong-password', 'captcha-3', 'C4N7')).rejects.toThrow(
       '用户名已被注册'
@@ -111,8 +116,32 @@ describe('C user authentication service', () => {
     expect(localStorage.getItem('dandan-c-user-auth')).toBeNull()
   })
 
+  it('loads feature permissions for the current user', async () => {
+    authState.session = {
+      token: 'jwt-token',
+      user: { id: 1, username: 'alice', nickname: 'Alice', status: 1 }
+    }
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({
+        success: true,
+        data: { userId: 1, permissionCodes: ['windows-build'] }
+      }), { status: 200 })
+    )
+
+    await expect(refreshFeaturePermissions()).resolves.toEqual(['windows-build'])
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://danyy.cn/api/c/user/permission/me',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({ Authorization: 'Bearer jwt-token' })
+      })
+    )
+    expect(featurePermissionState.codes).toEqual(['windows-build'])
+  })
+
   it('loads the access policy from t_c_user_setting', async () => {
     const setting = {
+      userType: 'TOOL',
       loginRequired: true,
       registerEnabled: false,
       guestUsable: false
@@ -124,6 +153,9 @@ describe('C user authentication service', () => {
     await expect(refreshUserSetting()).resolves.toEqual(setting)
     expect(fetchMock.mock.calls[0][0]).toBe(
       'https://danyy.cn/api/c/user/setting/detail'
+    )
+    expect(fetchMock.mock.calls[0][1]?.body).toBe(
+      JSON.stringify({ userType: 'TOOL' })
     )
     expect(authState.setting).toEqual(setting)
     expect(loginIsRequired()).toBe(true)

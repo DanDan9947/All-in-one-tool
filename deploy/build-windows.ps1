@@ -1,15 +1,20 @@
 param(
-    [string]$PythonExecutable = ""
+    [string]$PythonExecutable = "",
+    [switch]$UseExistingEnvironment
 )
 
 $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path -Parent $PSScriptRoot
 
 if (-not $PythonExecutable) {
-    $condaPython = Join-Path $env:USERPROFILE ".conda\envs\wechat-image-tools\python.exe"
-    if (Test-Path -LiteralPath $condaPython) {
-        $PythonExecutable = $condaPython
-    } else {
+    $condaCandidates = @(
+        (Join-Path $env:USERPROFILE ".conda\envs\wechat-image-tools\python.exe"),
+        "C:\ProgramData\anaconda3\envs\wechat-image-tools\python.exe"
+    )
+    $PythonExecutable = $condaCandidates |
+        Where-Object { Test-Path -LiteralPath $_ } |
+        Select-Object -First 1
+    if (-not $PythonExecutable) {
         $PythonExecutable = (Get-Command python -ErrorAction Stop).Source
     }
 }
@@ -19,25 +24,39 @@ if ($pythonVersion -ne "3.11") {
     throw "Windows build requires Python 3.11; found $pythonVersion"
 }
 
-$buildEnvironment = Join-Path $projectRoot "build\windows-venv"
-& $PythonExecutable -m venv --clear $buildEnvironment
-$buildPython = Join-Path $buildEnvironment "Scripts\python.exe"
-if (-not (Test-Path -LiteralPath $buildPython)) {
-    throw "Unable to create the clean Windows build environment."
-}
-$pipOptions = @("--disable-pip-version-check", "--prefer-binary", "--timeout", "30", "--retries", "2")
-& $buildPython -m pip install @pipOptions -r (Join-Path $projectRoot "server\requirements-build.txt")
-if ($LASTEXITCODE -ne 0) {
-    throw "Unable to install locked Windows build dependencies. Check the package index or proxy."
-}
-& $buildPython -m pip install @pipOptions -r (Join-Path $projectRoot "server\requirements-dev.txt")
-if ($LASTEXITCODE -ne 0) {
-    throw "Unable to install locked Windows test dependencies. Check the package index or proxy."
+if ($UseExistingEnvironment) {
+    $buildPython = $PythonExecutable
+    & $buildPython -c "import PyInstaller, fastapi, httpx, imageio_ffmpeg, onnxruntime, cv2, pystray, pytest, rapidocr, reportlab"
+    if ($LASTEXITCODE -ne 0) {
+        throw "The selected Python 3.11 environment does not contain all locked build and test dependencies."
+    }
+} else {
+    $buildEnvironment = Join-Path $projectRoot "build\windows-venv"
+    & $PythonExecutable -m venv --clear $buildEnvironment
+    $buildPython = Join-Path $buildEnvironment "Scripts\python.exe"
+    if (-not (Test-Path -LiteralPath $buildPython)) {
+        throw "Unable to create the clean Windows build environment."
+    }
+    $pipOptions = @("--disable-pip-version-check", "--prefer-binary", "--timeout", "30", "--retries", "2")
+    & $buildPython -m pip install @pipOptions -r (Join-Path $projectRoot "server\requirements-build.txt")
+    if ($LASTEXITCODE -ne 0) {
+        throw "Unable to install locked Windows build dependencies. Check the package index or proxy."
+    }
+    & $buildPython -m pip install @pipOptions -r (Join-Path $projectRoot "server\requirements-dev.txt")
+    if ($LASTEXITCODE -ne 0) {
+        throw "Unable to install locked Windows test dependencies. Check the package index or proxy."
+    }
 }
 
 $opencvVariants = & $buildPython -c "import importlib.metadata as m; print(','.join(sorted(d.metadata['Name'] for d in m.distributions() if d.metadata['Name'].lower() in {'opencv-python','opencv-python-headless'})))"
 if ($opencvVariants -match ",") {
     throw "Multiple OpenCV variants detected in clean build environment: $opencvVariants"
+}
+
+if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
+    if (Test-Path -LiteralPath "C:\nvm4w\nodejs") {
+        $env:PATH = "C:\nvm4w\nodejs;$env:PATH"
+    }
 }
 
 $nodeVersion = & node --version
@@ -74,6 +93,11 @@ try {
     Pop-Location
 }
 $env:WEB_DIST_PATH = Join-Path $webBuildRoot "dist"
+$targetWebDist = Join-Path $webSource "dist"
+if (Test-Path -LiteralPath $targetWebDist) {
+    Remove-Item -LiteralPath $targetWebDist -Recurse -Force
+}
+Copy-Item -LiteralPath (Join-Path $webBuildRoot "dist") -Destination $targetWebDist -Recurse
 
 & $buildPython -m pytest (Join-Path $projectRoot "server\tests") -q
 

@@ -167,6 +167,239 @@ a {
   border: 0;
 }
 
+.build-nav-button {
+  border: 0;
+  background: linear-gradient(135deg, #2b67d1, #7653d6);
+  box-shadow: 0 8px 18px rgba(43, 103, 209, 0.22);
+}
+
+.build-modal-icon {
+  color: #fff;
+  background: linear-gradient(135deg, #2b67d1, #7653d6);
+}
+
+.build-output-path {
+  padding: 10px 12px;
+  border-radius: 9px;
+  color: #45516a !important;
+  background: #f2f5fa;
+  font-family: Consolas, monospace;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.build-error {
+  color: #b42318 !important;
+}
+
+.build-modal {
+  width: min(100%, 520px);
+  text-align: left;
+}
+
+.build-modal h2 {
+  text-align: center;
+}
+
+.build-modal > p {
+  text-align: center;
+}
+
+.build-modal-icon.is-success {
+  background: linear-gradient(135deg, #12b76a, #027a48);
+}
+
+.build-modal-icon.is-failed {
+  background: linear-gradient(135deg, #f04438, #b42318);
+}
+
+.build-path-group {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.build-path-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #344054;
+}
+
+.build-path-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.build-path-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: Consolas, monospace;
+  color: #101828;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.build-path-input:focus {
+  outline: none;
+  border-color: #2b67d1;
+  box-shadow: 0 0 0 3px rgba(43, 103, 209, 0.15);
+}
+
+.build-quick-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.build-quick-btn {
+  padding: 4px 10px;
+  border: 1px solid #e4e7ec;
+  border-radius: 6px;
+  background: #f9fafb;
+  color: #475467;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.build-quick-btn:hover {
+  background: #f2f4f7;
+  border-color: #d0d5dd;
+  color: #1d2939;
+}
+
+.build-quick-btn.is-active {
+  background: #eff4ff;
+  border-color: #2b67d1;
+  color: #2b67d1;
+  font-weight: 600;
+}
+
+.build-progress-section {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.build-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  background: #f8fafd;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.build-step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #475467;
+}
+
+.build-step-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 50%;
+  background: #d0d5dd;
+  color: #fff;
+}
+
+.build-step-item.is-active .build-step-icon {
+  background: #2b67d1;
+  animation: pulse 1.5s infinite;
+}
+
+.build-step-item.is-active {
+  color: #2b67d1;
+  font-weight: 600;
+}
+
+.build-step-item.is-done .build-step-icon {
+  background: #12b76a;
+}
+
+.build-step-item.is-done {
+  color: #027a48;
+}
+
+.build-artifacts-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.build-artifact-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid #eaecf0;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
+}
+
+.build-artifact-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.build-artifact-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.build-artifact-size {
+  font-size: 12px;
+  color: #667085;
+}
+
+.build-download-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: #2b67d1;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.build-download-button:hover {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.build-hint-box {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  color: #166534;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .top-navigation a {
   padding: 9px 13px;
   border-radius: 10px;

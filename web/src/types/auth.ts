@@ -35,6 +35,7 @@ export interface CaptchaChallenge {
 }
 
 export interface CUserSetting {
+  userType?: string
   loginRequired: boolean
   registerEnabled: boolean
   guestUsable: boolean

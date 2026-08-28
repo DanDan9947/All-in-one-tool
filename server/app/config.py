@@ -45,6 +45,8 @@ class Settings(BaseSettings):
     modnet_model_path: Path = RESOURCE_ROOT / "server/models/modnet_photographic.onnx"
     modnet_model_sha256: str = ""
     web_dist_path: Path = RESOURCE_ROOT / "web/dist"
+    account_api_root: str = "https://danyy.cn/api"
+    windows_build_permission_code: str = "windows-build"
 
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"

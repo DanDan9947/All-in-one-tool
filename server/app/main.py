@@ -24,6 +24,7 @@ from .services.pdf_conversion import PdfConversionRunner
 from .services.screen_recording_store import ScreenRecordingStore
 from .services.screen_recording_transcoder import ScreenRecordingTranscoder
 from .services.video_compression import VideoCompressionManager
+from .services.windows_build import WindowsBuildManager
 
 logger = logging.getLogger(__name__)
 
@@ -77,6 +78,7 @@ async def lifespan(app: FastAPI):
     )
     app.state.video_compression_manager.initialize()
     app.state.video_compression_semaphore = asyncio.Semaphore(1)
+    app.state.windows_build_manager = WindowsBuildManager()
     cleanup_stop = asyncio.Event()
 
     async def cleanup_conversion_results() -> None:

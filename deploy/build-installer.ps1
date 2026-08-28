@@ -32,6 +32,8 @@ if (-not $CompilerPath) {
     $compilerCandidates = @(
         (Join-Path $env:LOCALAPPDATA "Programs\Inno Setup 7\ISCC.exe"),
         (Join-Path $env:LOCALAPPDATA "Programs\Inno Setup 6\ISCC.exe"),
+        "C:\Users\localadmin\AppData\Local\Programs\Inno Setup 7\ISCC.exe",
+        "C:\Users\localadmin\AppData\Local\Programs\Inno Setup 6\ISCC.exe",
         "C:\Program Files\Inno Setup 7\ISCC.exe",
         "C:\Program Files (x86)\Inno Setup 6\ISCC.exe",
         "C:\Program Files\Inno Setup 6\ISCC.exe"
@@ -43,6 +45,11 @@ if (-not $CompilerPath) {
 
 if (-not $CompilerPath -or -not (Test-Path -LiteralPath $CompilerPath)) {
     throw "ISCC.exe was not found. Install Inno Setup 7 or specify -CompilerPath."
+}
+
+$targetSetupFile = Join-Path $distDirectory "DandanTools-Setup.exe"
+if (Test-Path -LiteralPath $targetSetupFile) {
+    Remove-Item -LiteralPath $targetSetupFile -Force -ErrorAction SilentlyContinue
 }
 
 & $CompilerPath "/DPortableSource=$($portableDirectory.FullName)" "/DInstallerOutputDir=$distDirectory" $installerScript

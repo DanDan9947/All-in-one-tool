@@ -10,6 +10,7 @@ import type {
 } from '../types/auth'
 
 const AUTH_STORAGE_KEY = 'dandan-c-user-auth'
+const USER_TYPE = 'TOOL'
 
 interface AuthEnvelope<T> {
   success: boolean
@@ -53,6 +54,14 @@ export const authState = reactive<{
   settingLoaded: false
 })
 
+export const featurePermissionState = reactive<{
+  codes: string[]
+  loaded: boolean
+}>({
+  codes: [],
+  loaded: false
+})
+
 let settingRequest: Promise<CUserSetting> | null = null
 let settingLoadedAt = 0
 const SETTING_CACHE_MS = 15_000
@@ -92,6 +101,7 @@ export function login(
   captchaCode: string
 ): Promise<AuthSession> {
   return post<AuthSession>('/c/user/login', {
+    userType: USER_TYPE,
     username: username.trim(),
     password,
     captchaId,
@@ -102,6 +112,7 @@ export function login(
 export function register(payload: RegisterPayload): Promise<CUser> {
   return post<CUser>('/c/user/register', {
     ...payload,
+    userType: USER_TYPE,
     username: payload.username.trim(),
     captchaCode: payload.captchaCode.trim(),
     nickname: payload.nickname?.trim() || undefined,
@@ -112,7 +123,9 @@ export function register(payload: RegisterPayload): Promise<CUser> {
 
 export async function refreshUserSetting(): Promise<CUserSetting> {
   try {
-    const setting = await post<CUserSetting>('/c/user/setting/detail', {})
+    const setting = await post<CUserSetting>('/c/user/setting/detail', {
+      userType: USER_TYPE
+    })
     authState.setting = setting
     settingLoadedAt = Date.now()
     return setting
@@ -144,9 +157,53 @@ export function registrationIsEnabled(): boolean {
 export function saveSession(session: AuthSession): void {
   localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session))
   authState.session = session
+  refreshFeaturePermissions().catch(() => {
+    featurePermissionState.codes = []
+  })
 }
 
 export function logout(): void {
   localStorage.removeItem(AUTH_STORAGE_KEY)
   authState.session = null
+  featurePermissionState.codes = []
+  featurePermissionState.loaded = false
+}
+
+export async function refreshFeaturePermissions(): Promise<string[]> {
+  const session = authState.session
+  if (!session) {
+    featurePermissionState.codes = []
+    featurePermissionState.loaded = true
+    return []
+  }
+  let response: Response
+  try {
+    response = await fetchAccountApi('/c/user/permission/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.token}`
+      }
+    })
+  } catch {
+    featurePermissionState.codes = []
+    featurePermissionState.loaded = true
+    throw new AuthError('无法连接权限服务，请稍后重试')
+  }
+  const body = (await response.json()) as AuthEnvelope<{
+    userId: number
+    permissionCodes: string[]
+  }>
+  if (!response.ok || !body.success) {
+    featurePermissionState.codes = []
+    featurePermissionState.loaded = true
+    throw new AuthError(body.message || '读取功能权限失败')
+  }
+  featurePermissionState.codes = body.data?.permissionCodes || []
+  featurePermissionState.loaded = true
+  return featurePermissionState.codes
+}
+
+export function hasFeaturePermission(code: string): boolean {
+  return featurePermissionState.codes.includes(code)
 }

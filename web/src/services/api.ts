@@ -11,10 +11,43 @@ import {
   type ImageCompressionResult,
   type VideoCompressionOptions,
   type VideoCompressionJob,
-  type ExcelHeaderResult
+  type ExcelHeaderResult,
+  type WindowsBuildArtifact,
+  type WindowsBuildStatus
 } from '../types/api'
 
 const API_ROOT = '/api/v1'
+
+export interface WindowsBuildResult {
+  status: 'running' | 'waiting-for-exit'
+  requiresAppExit: boolean
+  logPath: string
+  outputDirectory: string
+}
+
+export async function startWindowsBuild(
+  token: string,
+  targetDirectory?: string
+): Promise<WindowsBuildResult> {
+  return jsonRequest(`${API_ROOT}/windows-builds`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ targetDirectory: targetDirectory || undefined })
+  })
+}
+
+export async function getWindowsBuildStatus(): Promise<WindowsBuildStatus> {
+  return jsonRequest(`${API_ROOT}/windows-builds/current`, {
+    method: 'GET'
+  })
+}
+
+export function getWindowsBuildArtifactUrl(fileName: string): string {
+  return `${API_ROOT}/windows-builds/artifacts/${encodeURIComponent(fileName)}`
+}
 
 interface ErrorPayload {
   code?: string

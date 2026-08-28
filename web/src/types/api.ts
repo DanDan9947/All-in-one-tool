@@ -123,3 +123,18 @@ export interface VideoCompressionJob {
   errorCode?: string
   errorMessage?: string
 }
+
+export interface WindowsBuildArtifact {
+  name: string
+  sizeBytes: number
+  sizeMb: number
+  modifiedAt: number
+}
+
+export interface WindowsBuildStatus {
+  status: 'idle' | 'running' | 'completed' | 'failed'
+  exitCode?: number | null
+  logPath: string
+  outputDirectory: string
+  artifacts?: WindowsBuildArtifact[]
+}
